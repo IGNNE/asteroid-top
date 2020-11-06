@@ -16,39 +16,30 @@ Building from source
 
 *These instructions assume you're running Linux*
 
-1. Install Go >= 1.7.1 and setup a proper `GOPATH <https://golang.org/doc/code.html#GOPATH>`_ 
-
-2. Install Qt 5.7.0 the official `prebuilt package <https://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-android-5.7.0.run>`_
+1. Install Go >= 1.13 and setup a proper `GOPATH <https://golang.org/doc/code.html#GOPATH>`_ 
 
 3. Install `Asteroid SDK <https://asteroidos.org/wiki/creating-an-asteroid-app/>`_
 
-4. Make sure to source the oecore script before each build (something like)::
+4. Install the Qt bindings from github.com/therecipe/qt.
 
-    $ source /usr/local/oecore-x86_64/environment-setup-armv7ve-neon-oe-linux-gnueabi
+5. Setup the Qt bindings for asteroid. 
+
+   $ qtsetup full asteroid
 
 5. Clone asteroid-top and download dependencies::
 
     $ git clone https://github.com/aebruno/asteroid-top.git
     $ cd asteroid-top
     $ go get github.com/shirou/gopsutil 
-
-6. Download and install Go QT bindings. This will clone
-   https://github.com/therecipe/qt and checkout the specific version that has
-   been known to work with asteroid-top::
-
-    $ ./build.sh bootstrap-qt
-
-7. Run qtmoc, qtrcc and qtminimal::
-
     $ ./build.sh prep
 
-8. Compile armv7ve binary for Asteroid::
+8. Build the armv7ve binary for Asteroid::
 
-    $ ./build.sh compile
+    $ qtdeploy build asteroid
 
 9. Install the app on the watch::
 
-    $ adb push asteroid-top /usr/bin/
+    $ adb push /deploy/asteroid/asteroid-top /usr/bin/
     $ adb push asteroid-top.desktop /usr/share/applications/
 
 -------------------------------------------------------------------------------
